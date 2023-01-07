@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "V1.2.2"
+  #define SHORT_BUILD_VERSION "V1.2.3"
 #endif
 
 /**
@@ -43,7 +43,7 @@
  * version was tagged.
  */
 #ifndef STRING_DISTRIBUTION_DATE
-  #define STRING_DISTRIBUTION_DATE "2021-12-22"
+  #define STRING_DISTRIBUTION_DATE "2023-01-07"
 #endif
 
 /**
@@ -67,7 +67,7 @@
  * (Other behaviors are given by the firmware version and capabilities report.)
  */
 #ifndef PROTOCOL_VERSION
-  #define PROTOCOL_VERSION "1.2.2"
+  #define PROTOCOL_VERSION "1.2.3"
 #endif
 
 /**

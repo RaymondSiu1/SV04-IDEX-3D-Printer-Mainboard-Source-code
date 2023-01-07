@@ -70,7 +70,7 @@ extern int power_off_type_yes;
 #define TWO_EXTRUDER_HOTEND_YOFFSET_VP     0x1094
 #define TWO_EXTRUDER_HOTEND_ZOFFSET_VP     0x1096
 
-#define AUTO_BED_LEVEL_1POINT_VP           0x1100
+#define AUTO_BED_LEVEL_1POINT_VP           0x4000 // changed to 0x4000 from 0x1100 by John Carlson
 
 // added by John Carlson for new bed point leveling display
 #define AUTO_BED_LEVEL_CUR_POINT_VP          0x0110

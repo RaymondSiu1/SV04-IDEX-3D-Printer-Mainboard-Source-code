@@ -43,7 +43,8 @@
 float zprobe_zoffset;
 float last_zoffset = 0.0;
 
-const float manual_feedrate_mm_m[] = {50 * 60, 50 * 60, 4 * 60, 60};
+//const float manual_feedrate_mm_m[] = {50 * 60, 50 * 60, 4 * 60, 60};
+const float manual_feedrate_mm_m[] = {100 * 60, 100 * 60, 10 * 60, 60};  // added by John Carlson to speed up travels
 
 int startprogress = 0;
 float pause_z = 0;
@@ -91,7 +92,7 @@ RTSSHOW rtscheck;
 int Update_Time_Value = 0;
 
 // added by John Carlson
-int AutoHomeFirstPoint = 1;
+int AutoHomeFirstPoint = 0;
 
 bool PoweroffContinue = false;
 char commandbuf[30];
@@ -354,13 +355,10 @@ void RTSSHOW::RTS_Init()
     }
   #endif
   #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
+    SERIAL_ECHOLNPGM("lets build and set bed mesh info");
     bool zig = false;
     int8_t inStart, inStop, inInc, showcount;
     showcount = 0;
-    // added by John Carlson
-    //std::ostringstream mstr;
-    //std::string mstr;
-
     //settings.load();
     for (int y = 0; y < GRID_MAX_POINTS_Y; y++)
     {
@@ -381,17 +379,12 @@ void RTSSHOW::RTS_Init()
       zig ^= true;
       for (int x = inStart; x != inStop; x += inInc)
       {
-        //sprintf_P((unsigned char)mstr, PSTR("%hu %4.1f"), (unsigned char)mstr, z_values[x][y] * 1000);
-        //mstr << ' ' << z_values[x][y] * 1000;
-        //mstr =+ " " + std::to_string(z_values[x][y] * 1000);
-        //RTS_SndData(z_values[x][y] * 1000, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
+        SERIAL_ECHOLNPGM("value: ", z_values[x][y] * 1000);
+        RTS_SndData(z_values[x][y] * 1000, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
         showcount++;
       }
-      //mstr =+  "\n";
-      //sprintf_P((unsigned char)mstr, PSTR("%hu %s"), (unsigned char)mstr, "\n");
     }
-
-    //RTS_SndData(mstr.c_str(), AUTO_BED_LEVEL_MESH_VP);
+    SERIAL_ECHOLNPGM("should have output the mesh");
     queue.enqueue_now_P(PSTR("M420 S1"));
   #endif
 
@@ -2323,7 +2316,7 @@ void RTSSHOW::RTS_HandleData()
             zig ^= true;
             for (int x = inStart; x != inStop; x += inInc)
             {
-              RTS_SndData(z_values[x][y] * 1000, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
+              RTS_SndData(z_values[x][y]*1000, AUTO_BED_LEVEL_1POINT_VP + showcount * 2);
               showcount++;
             }
           }
@@ -2635,7 +2628,7 @@ void EachMomentUpdate()
           }
           rtscheck.RTS_SndData((unsigned char)card.percentDone(), PRINT_PROCESS_VP);
           last_cardpercentValue = card.percentDone();
-          rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP);
+          //rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP);
         }
       }
 
@@ -2688,6 +2681,9 @@ void EachMomentUpdate()
         AutoHomeIconNum = 0;
       }
     }
+    // moved z height output to make sure it is always up to date
+    rtscheck.RTS_SndData(10 * current_position[Z_AXIS], AXIS_Z_COORD_VP);
+    
     next_rts_update_ms = ms + RTS_UPDATE_INTERVAL + Update_Time_Value;
   }
 }
@@ -2824,7 +2820,7 @@ void RTS_AutoBedLevelPage()
 {
   if(waitway == 3)
   {
-    rtscheck.RTS_SndData(ExchangePageBase + 22, ExchangepageAddr);
+    rtscheck.RTS_SndData(ExchangePageBase + 81, ExchangepageAddr);
     waitway = 0;
   }
 }
