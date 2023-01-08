@@ -74,7 +74,7 @@
 #define MACVERSION      STRING_CONFIG_H_AUTHOR
 #define SOFTVERSION     SHORT_BUILD_VERSION
 #define CORP_WEBSITE    "johncarlson21 on GH"
-#define Screen_version  "v1.2.2"
+#define Screen_version  "!REFLASH SCREEN!"
 
 /**
  * *** VENDORS PLEASE READ ***
