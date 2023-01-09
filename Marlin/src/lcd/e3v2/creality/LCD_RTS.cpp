@@ -438,7 +438,7 @@ void RTSSHOW::RTS_Init()
   RTS_SndData(SOFTVERSION, PRINTER_VERSION_TEXT_VP);
   RTS_SndData(sizebuf, PRINTER_PRINTSIZE_TEXT_VP);
   RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
-  RTS_SndData(Screen_version, Screen_Version_VP);
+  //RTS_SndData(Screen_version, Screen_Version_VP);
   /**************************some info init*******************************/
   RTS_SndData(0, PRINT_PROCESS_ICON_VP);
   if(CardReader::flag.mounted)
@@ -1427,7 +1427,7 @@ void RTSSHOW::RTS_HandleData()
       else if (recdat.data[0] == 5)
       {
         RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
-        RTS_SndData(Screen_version, Screen_Version_VP);
+        //RTS_SndData(Screen_version, Screen_Version_VP);
         RTS_SndData(ExchangePageBase + 33, ExchangepageAddr);
       }
       else if (recdat.data[0] == 6)
@@ -2479,7 +2479,7 @@ void RTSSHOW::RTS_HandleData()
       RTS_SndData(sizeBuf, PRINTER_PRINTSIZE_TEXT_VP);
 
       RTS_SndData(CORP_WEBSITE, PRINTER_WEBSITE_TEXT_VP);
-      RTS_SndData(Screen_version, Screen_Version_VP);
+      //RTS_SndData(Screen_version, Screen_Version_VP);
 
       if (thermalManager.fan_speed[0] == 0)
       {
